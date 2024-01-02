@@ -1,5 +1,4 @@
-use sqlx::{ FromRow, SqlitePool };
-use serde::{ Serialize };
+use sqlx::{ SqlitePool };
 
 #[path = "../util/db.rs"]
 mod db;

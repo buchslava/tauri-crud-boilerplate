@@ -19,6 +19,7 @@ pub async fn todo_insert(
     personId: i64,
     completed: i64
 ) -> Result<i64, String> {
+    #![allow(non_snake_case)]
     let db_url = util::db::get_database();
     let db = SqlitePool::connect(&db_url).await.unwrap();
     let query_result = sqlx
@@ -46,6 +47,7 @@ pub async fn todo_update(
     personId: i64,
     completed: i64
 ) -> Result<i64, String> {
+    #![allow(non_snake_case)]
     let db_url = util::db::get_database();
     let db = SqlitePool::connect(&db_url).await.unwrap();
     let query_result = sqlx
@@ -79,6 +81,7 @@ pub async fn todo_delete(id: i64) -> Result<i64, String> {
 
 #[tauri::command]
 pub async fn todo_select(personId: i64) -> Result<String, String> {
+    #![allow(non_snake_case)]
     let db_url = util::db::get_database();
     let db = SqlitePool::connect(&db_url).await.unwrap();
     let query_result = sqlx

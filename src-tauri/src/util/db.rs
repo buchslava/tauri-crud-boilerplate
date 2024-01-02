@@ -12,6 +12,7 @@ fn get_database_path() -> io::Result<PathBuf> {
     Ok(exe)
 }
 
+#[allow(dead_code)]
 pub async fn create(db_url: &str) {
     if !Sqlite::database_exists(db_url).await.unwrap_or(false) {
         match Sqlite::create_database(db_url).await {
