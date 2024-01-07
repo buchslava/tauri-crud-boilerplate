@@ -11,6 +11,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import TodoEdit from "./TodoEdit";
 import { apiCall } from "./util";
+import { useGlobalContext } from "./GlobalContext";
 
 interface DataType {
   key?: React.Key;
@@ -20,6 +21,7 @@ interface DataType {
 }
 
 export default function Todo({ personId }: { personId: number }) {
+  const { refreshDescriptor, refreshTodo } = useGlobalContext();
   const [editVisible, setEditVisible] = useState(false);
   const [columns, setColumns] = useState<ColumnsType<DataType>>();
   const [data, setData] = useState<DataType[]>([]);
@@ -30,7 +32,7 @@ export default function Todo({ personId }: { personId: number }) {
   const doDelete = async (id: number) => {
     try {
       await apiCall("todo_delete", { id });
-      load();
+      refreshTodo();
     } catch (e) {
       setEditVisible(false);
       console.error(e);
@@ -118,7 +120,7 @@ export default function Todo({ personId }: { personId: number }) {
       },
     ]);
     load();
-  }, [personId]);
+  }, [personId, refreshDescriptor.todo]);
 
   const doEditOk = () => {
     editFormRef.current.submit();
@@ -140,7 +142,7 @@ export default function Todo({ personId }: { personId: number }) {
         await apiCall("todo_insert", body);
       }
       setEditVisible(false);
-      load();
+      refreshTodo();
     } catch (e) {
       setEditVisible(false);
       console.error(e);

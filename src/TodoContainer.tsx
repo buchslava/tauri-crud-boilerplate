@@ -2,8 +2,10 @@ import { Tabs, TabsProps, message } from "antd";
 import { useEffect, useState } from "react";
 import { apiCall } from "./util";
 import Todo from "./Todo";
+import { useGlobalContext } from "./GlobalContext";
 
 export default function TodoContainer() {
+  const { refreshDescriptor } = useGlobalContext();
   const [errorMessage, errorMessageHolder] = message.useMessage();
   const [tabs, setTabs] = useState<TabsProps["items"]>([]);
 
@@ -29,7 +31,7 @@ export default function TodoContainer() {
 
   useEffect(() => {
     loadPersons();
-  }, []);
+  }, [refreshDescriptor.person]);
 
   return (
     <>

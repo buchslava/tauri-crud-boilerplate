@@ -1,11 +1,13 @@
-import { invoke } from "@tauri-apps/api/tauri";
+import { InvokeArgs, invoke } from "@tauri-apps/api/tauri";
 
-export const apiCall = async (
+export const apiCall = async <T>(
   name: string,
-  parameters: any = {}
-): Promise<any> =>
+  parameters?: InvokeArgs
+): Promise<T> =>
   new Promise((resolve, reject) =>
-    invoke(name, parameters).then(resolve).catch(reject)
+    invoke(name, parameters)
+      .then(resolve as (value: unknown) => PromiseLike<T>)
+      .catch(reject)
   );
 
 export const onlyUnique = <T>(value: T, index: number, array: T[]) =>
