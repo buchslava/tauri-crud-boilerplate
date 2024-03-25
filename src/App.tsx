@@ -3,6 +3,7 @@ import "./App.css";
 import Person from "./Person";
 import TodoContainer from "./TodoContainer";
 import Data from "./Data";
+import { useGlobalContext } from "./GlobalContext";
 
 const tabs: TabsProps["items"] = [
   {
@@ -23,7 +24,21 @@ const tabs: TabsProps["items"] = [
 ];
 
 function App() {
-  return <Tabs items={tabs} />;
+  const { refreshPerson, refreshTodo } = useGlobalContext();
+
+  return (
+    <Tabs
+      items={tabs}
+      onTabClick={(key: string) => {
+        if (key === "persons") {
+          refreshPerson();
+        }
+        if (key === "todo") {
+          refreshTodo();
+        }
+      }}
+    />
+  );
 }
 
 export default App;
